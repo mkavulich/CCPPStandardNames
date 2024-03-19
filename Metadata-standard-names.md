@@ -6,18 +6,20 @@
 * [state_variables](#state_variables)
 * [diagnostics](#diagnostics)
 * [atmospheric_composition](#atmospheric_composition)
-* [atmospheric_composition: GOCART aerosols](#atmospheric_composition: GOCART aerosols)
-* [standard_variables](#standard_variables)
-* [GFS_typedefs_GFS_control_type](#GFS_typedefs_GFS_control_type)
-* [GFS_typedefs_GFS_interstitial_type](#GFS_typedefs_GFS_interstitial_type)
-* [GFS_typedefs_GFS_tbd_type](#GFS_typedefs_GFS_tbd_type)
-* [GFS_typedefs_GFS_sfcprop_type](#GFS_typedefs_GFS_sfcprop_type)
-* [GFS_typedefs_GFS_coupling_type](#GFS_typedefs_GFS_coupling_type)
-* [GFS_typedefs_GFS_statein_type](#GFS_typedefs_GFS_statein_type)
-* [GFS_typedefs_GFS_cldprop_type](#GFS_typedefs_GFS_cldprop_type)
-* [GFS_typedefs_GFS_radtend_type](#GFS_typedefs_GFS_radtend_type)
-* [GFS_typedefs_GFS_grid_type](#GFS_typedefs_GFS_grid_type)
-* [GFS_typedefs_GFS_stateout_type](#GFS_typedefs_GFS_stateout_type)
+* [atmospheric_composition: GOCART aerosols](#atmospheric_composition-gocart-aerosols)
+* [required framework-provided variables](#required-framework-provided-variables)
+* [optional framework-provided variables](#optional-framework-provided-variables)
+* [system variables](#system-variables)
+* [GFS_typedefs_GFS_control_type](#gfs_typedefs_gfs_control_type)
+* [GFS_typedefs_GFS_interstitial_type](#gfs_typedefs_gfs_interstitial_type)
+* [GFS_typedefs_GFS_tbd_type](#gfs_typedefs_gfs_tbd_type)
+* [GFS_typedefs_GFS_sfcprop_type](#gfs_typedefs_gfs_sfcprop_type)
+* [GFS_typedefs_GFS_coupling_type](#gfs_typedefs_gfs_coupling_type)
+* [GFS_typedefs_GFS_statein_type](#gfs_typedefs_gfs_statein_type)
+* [GFS_typedefs_GFS_cldprop_type](#gfs_typedefs_gfs_cldprop_type)
+* [GFS_typedefs_GFS_radtend_type](#gfs_typedefs_gfs_radtend_type)
+* [GFS_typedefs_GFS_grid_type](#gfs_typedefs_gfs_grid_type)
+* [GFS_typedefs_GFS_stateout_type](#gfs_typedefs_gfs_stateout_type)
 
 ## dimensions
 Dimension standard names may come in sets of six related standard names for each dimension:
@@ -41,6 +43,8 @@ Currently, the only dimension which supports all six dimension types is horizont
 * `horizontal_dimension`: Size horizontal dimension
     * `integer`: units = count
 * `vertical_layer_dimension`: number of vertical layers
+    * `integer`: units = count
+* `vertical_layer_dimension_extended_up_by_1`: number of vertical layers extended up by 1
     * `integer`: units = count
 * `vertical_interface_dimension`: number of vertical interfaces
     * `integer`: units = count
@@ -130,6 +134,8 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `logical(kind=)`: units = flag
 * `lagrangian_tendency_of_air_pressure`: Vertical pressure velocity
     * `real(kind=kind_phys)`: units = Pa s-1
+* `dry_air_density`: Density of dry air
+    * `real(kind=kind_phys)`: units = kg m-3
 * `air_pressure`: Midpoint air pressure
     * `real(kind=kind_phys)`: units = Pa
 * `air_pressure_of_dry_air`: Dry midpoint pressure
@@ -152,6 +158,8 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = m
 * `geopotential_height_wrt_surface`: geopotential height w.r.t. local surface
     * `real(kind=kind_phys)`: units = m
+* `geopotential_height_wrt_surface_at_interface`: geopotential height w.r.t. local surface at interface
+    * `real(kind=kind_phys)`: units = m
 * `potentially_advected_quantities`: Potentially advected quantities
     * `real(kind=kind_phys)`: units = various
 * `air_pressure_at_interface`: Air pressure at interface
@@ -162,12 +170,16 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = 1
 * `ln_air_pressure_of_dry_air_at_interface`: Ln air pressure of dry air at interface
     * `real(kind=kind_phys)`: units = 1
+* `air_pressure_extended_up_by_1`: Air pressure extended up by 1
+    * `real(kind=kind_phys)`: units = Pa
 * `largest_model_top_pressure_that_allows_molecular_diffusion`: Largest model top pressure that allows molecular diffusion
     * `real(kind=kind_phys)`: units = Pa
 * `do_molecular_diffusion`: Do molecular diffusion
     * `logical(kind=kind_phys)`: units = flag
 * `is_initialized_physics_grid`: Flag to indicate if physics grid is initialized
     * `logical(kind=kind_phys)`: units = flag
+* `control_for_negative_constituent_warning`: Logging setting for negative constituent mass fixer
+    * `character(kind=len=*)`: units = 1
 * `geopotential_height_at_interface`: Geopotential height at interface
     * `real(kind=kind_phys)`: units = m
 * `vertically_integrated_total_energy_of_initial_state`: Vertically integrated total energy of initial state
@@ -178,9 +190,11 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = kg m-2
 * `vertically_integrated_total_water_of_current_state`: Vertically integrated total water of current state
     * `real(kind=kind_phys)`: units = kg m-2
+* `tendency_of_dry_air_enthalpy_at_constant_pressure`: Tendency of dry air enthalpy at constant pressure
+    * `real(kind=kind_phys)`: units = J kg-1 s-1
 * `tendency_of_air_temperature`: Change in temperature from a parameterization
     * `real(kind=kind_phys)`: units = K s-1
-* `tendency_of_air_temperature_due_to_model_physics`: Total change in temperature from a                               physics suite
+* `tendency_of_air_temperature_due_to_model_physics`: Total change in air temperature from a physics suite
     * `real(kind=kind_phys)`: units = K s-1
 * `tendency_of_air_potential_temperature`: Change in potential temperature from a parameterization
     * `real(kind=kind_phys)`: units = K s-1
@@ -194,6 +208,14 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = m s-2
 * `tendency_of_y_wind_due_to_model_physics`: Tendency of y wind due to model physics
     * `real(kind=kind_phys)`: units = m s-2
+* `tendency_of_eastward_wind`: Change in eastward wind from a parameterization
+    * `real(kind=kind_phys)`: units = m s-2
+* `tendency_of_eastward_wind_due_to_model_physics`: Total change in eastward wind from a physics suite
+    * `real(kind=kind_phys)`: units = m s-2
+* `tendency_of_northward_wind`: Change in northward wind from a parameterization
+    * `real(kind=kind_phys)`: units = m s-2
+* `tendency_of_northward_wind_due_to_model_physics`: Total change in northward wind from a physics suite
+    * `real(kind=kind_phys)`: units = m s-2
 * `surface_upward_heat_flux_in_air`: Surface upward heat flux in air
     * `real(kind=kind_phys)`: units = W m-2
 * `cumulative_boundary_flux_of_total_energy`: Cumulative boundary flux of total energy
@@ -202,11 +224,13 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = W m-2
 * `us_standard_air_pressure_at_sea_level`: US Standard Atmospheric pressure at sea level
     * `real(kind=kind_phys)`: units = Pa
-* `reference_pressure`: reference pressure used in definition of potential temperature, Exner function, etc.
+* `surface_reference_pressure`: Reference pressure used in definition of potential temperature, Exner function, etc.
     * `real(kind=kind_phys)`: units = Pa
 * `reference_pressure_in_atmosphere_layer`: reference pressure in atmosphere layer
     * `real(kind=kind_phys)`: units = Pa
 * `reference_air_pressure_normalized_by_surface_air_pressure`: reference pressure normalized by surface pressure
+    * `real(kind=kind_phys)`: units = 1
+* `reference_pressure_in_atmosphere_layer_normalized_by_surface_reference_pressure`: Reference pressure in atmosphere layer normalized by surface reference pressure
     * `real(kind=kind_phys)`: units = 1
 * `dimensionless_exner_function`: exner function
     * `real(kind=kind_phys)`: units = 1
@@ -218,6 +242,10 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = K
 * `composition_dependent_gas_constant_of_dry_air`: Composition dependent gas constant of dry air
     * `real(kind=kind_phys)`: units = J kg-1 K-1
+* `composition_dependent_specific_heat_of_dry_air_at_constant_pressure`: composition dependent specific heat of dry air at constant pressure
+    * `real(kind=kind_phys)`: units = J kg-1 K-1
+* `composition_dependent_ratio_of_dry_air_gas_constant_to_specific_heat_of_dry_air_at_constant_pressure`: composition dependent ratio of dry air gas constant to specific heat of dry air at constant pressure
+    * `real(kind=kind_phys)`: units = 1
 * `ratio_of_water_vapor_gas_constant_to_composition_dependent_dry_air_gas_constant_minus_one`: (Rwv / Rdair) - 1.0
     * `real(kind=kind_phys)`: units = 1
 * `mass_content_of_cloud_ice_in_atmosphere_layer`: Mass content of cloud ice in atmosphere layer
@@ -246,13 +274,19 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = mol mol-1
 * `water_vapor_mixing_ratio_wrt_dry_air`: Ratio of the mass of water vapor to the mass of dry air
     * `real(kind=kind_phys)`: units = kg kg-1
+* `cloud_liquid_water_mixing_ratio_wrt_moist_air_and_condensed_water`: Ratio of the mass of liquid water to the mass of moist air and condensed water
+    * `real(kind=kind_phys)`: units = kg kg-1
 * `cloud_liquid_water_mixing_ratio_wrt_moist_air`: Ratio of the mass of liquid water to the mass of moist air
     * `real(kind=kind_phys)`: units = kg kg-1
 * `cloud_liquid_water_mixing_ratio_wrt_dry_air`: Ratio of the mass of liquid water to the mass of dry air
     * `real(kind=kind_phys)`: units = kg kg-1
 * `cloud_ice_mixing_ratio_wrt_dry_air`: Ratio of the mass of ice to the mass of dry air
     * `real(kind=kind_phys)`: units = kg kg-1
+* `rain_mixing_ratio_wrt_moist_air_and_condensed_water`: ratio of the mass of rain to the mass of moist air and condensed water
+    * `real(kind=kind_phys)`: units = kg kg-1
 * `rain_mixing_ratio_wrt_moist_air`: ratio of the mass of rain to the mass of moist air
+    * `real(kind=kind_phys)`: units = kg kg-1
+* `rain_mixing_ratio_wrt_dry_air`: ratio of the mass of rain to the mass of dry air
     * `real(kind=kind_phys)`: units = kg kg-1
 * `mole_fraction_of_ozone_in_air`: Mole fraction of ozone in air
     * `real(kind=kind_phys)`: units = mol mol-1
@@ -333,11 +367,29 @@ Note that appending '_on_previous_timestep' to standard_names in this section yi
     * `real(kind=kind_phys)`: units = m-1
 * `volume_extinction_in_air_due_to_aerosol_particles_lambda3`: Aerosol extinction at wavelength3
     * `real(kind=kind_phys)`: units = m-1
-## standard_variables
-Standard / required CCPP variables
+## required framework-provided variables
+Required CCPP framework-provided variables
 * `ccpp_error_message`: Error message for error handling in CCPP
     * `character(kind=len=512)`: units = none
 * `ccpp_error_code`: Error code for error handling in CCPP
+    * `integer(kind=)`: units = 1
+## optional framework-provided variables
+Optional CCPP framework-provided variables
+* `scheme_name`: CCPP physics scheme name
+    * `character(kind=len=64)`: units = none
+* `ccpp_constituent_properties`: CCPP Constituent Properties
+    * `ccpp_constituent_prop_ptr_t(kind=)`: units = none
+* `ccpp_constituents`: Array of constituents managed by CCPP Framework
+    * `real(kind=kind_phys)`: units = none
+* `ccpp_constituent_minimum_values`: CCPP constituent minimum values
+    * `real(kind=kind_phys)`: units = none
+* `number_of_ccpp_constituents`: Number of constituents managed by CCPP Framework
+    * `integer(kind=)`: units = count
+## system variables
+Variables related to the compute environment
+* `flag_for_mpi_root`: Flag for MPI root
+    * `logical(kind=)`: units = flag
+* `log_output_unit`: Log output unit
     * `integer(kind=)`: units = 1
 ## GFS_typedefs_GFS_control_type
 * `sigma_pressure_hybrid_coordinate_a_coefficient`: Sigma pressure hybrid coordinate a coefficient

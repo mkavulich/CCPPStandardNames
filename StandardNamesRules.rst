@@ -107,6 +107,10 @@ CCPP Standard Name Rules
    use flag_for ``_X``. If it is any other data type, use control_for ``_X``. All flags
    should be Fortran logicals.
 
+#. Standard names that start with ``ccpp_`` represent CCPP framework-provided variables.
+   All other standard names should avoid the use of ``ccpp`` in their name in order
+   to avoid any confusion.
+
 #. No punctuation should appear in standard names except for underscores (_).
 
 #. Standard names are case insensitive, i.e. example = EXAMPLE.
@@ -156,6 +160,7 @@ Suffixes
 | **at_pressure_levels**
 | **at_top_of_viscous_sublayer**
 | **at_various_atmosphere_layers**
+| **extended_up_by_1**
 
 
 Component
